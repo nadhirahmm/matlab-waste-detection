@@ -1,14 +1,14 @@
 %% Setup
-modelfile = "weights\best.onnx";
+modelfile = "C:\Users\nadhi\OneDrive\Desktop\ALLAHU AKBAR TA!!\YOLOv5\yolov5\runs\train\trashnet_yolov5s2\weights\best.onnx";
 % python export.py --weights runs/train/trashnet_yolov5s2/weights/best.pt --imgsz 416 --include onnx --simplify 
 labels = ["cardboard", "glass", "metal", "paper", "plastic", "trash"];
-colorMap = lines(numel(labels));  % 6 distinct RGB colors
+colorMap = lines(numel(labels));  % 6 distinct RGB col
 
 %% Import ONNX network
 net = importNetworkFromONNX(modelfile);
 
 %% Read and preprocess image
-orig = imread("path_to_image");
+orig = imread("C:\Users\nadhi\OneDrive\Documents\YOLO-TrashNet\images\val\cardboard261.jpg");
 img = imresize(orig, [416 416]);
 img = single(img) / 255;
 img = reshape(img, [416, 416, 3, 1]);
@@ -49,7 +49,7 @@ boxes = boxes .* scaleBack;
 
 %% Visualization
 x = boxes(1); y = boxes(2); w = boxes(3); h = boxes(4);
-labelH = 25;
+labelH = 35;
 labelY = max(y - labelH, 1);  % Clamp top label position
 
 disp("Unique class indices (raw):");
@@ -64,10 +64,10 @@ out = insertShape(orig, "Rectangle", [x y w h], ...
 "Color", color, "LineWidth", 4); % Draw bounding box
 out = insertShape(out, "FilledRectangle", [x, labelY, w, labelH], ...
     "Color", color, "Opacity", 1); % Draw filled label background above box
-out = insertText(out, [x + 5, labelY - 1], ann, ...
-    "BoxOpacity", 0, "TextColor", "white", "FontSize", 18); % Draw white label text on top
+out = insertText(out, [x - 3, labelY - 8], ann, ...
+    "Font", "Times New Roman", "BoxOpacity", 0, "TextColor", "white", "FontSize", 31); % Draw white label text on top
 
 disp("Box being drawn:");
 disp([x y w h]);
 
-% imshow(out);
+imshow(out);

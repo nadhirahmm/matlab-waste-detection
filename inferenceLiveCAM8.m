@@ -1,12 +1,12 @@
 %% Setup
-cam = webcam('webcam_name');
+cam = webcam('c922 Pro Stream Webcam');
 cam.Resolution = '640x480';
 inputSize = [416 416];
 
 labels = ["cardboard", "glass", "metal", "paper", "plastic", "trash"];
 colorMap = lines(numel(labels));  % 6 distinct RGB colors
 
-modelfile = "weights\best.onnx";
+modelfile = "C:\Users\nadhi\OneDrive\Documents\YOLO-TrashNet\runs\detect\trashnet_yolov8n3\weights\best.onnx";
 net = importNetworkFromONNX(modelfile);
 net = initialize(net, dlarray(zeros(416, 416, 3, 1), 'SSCB'));
 sigmoid = @(x) 1 ./ (1 + exp(-x));
@@ -81,18 +81,18 @@ while true
             boxColor = colorMap(cls+1, :) * 255;
 
             % Draw bounding box
-            out = insertShape(out, 'Rectangle', [x y w h], ...
-                'Color', boxColor, 'LineWidth', 4);
+            out = insertShape(out, "Rectangle", [x y w h], ...
+                "Color", boxColor, "LineWidth", 4);
 
             % Draw filled label background above box
-            labelH = 25;
+            labelH = 35;
             labelY = max(y - labelH, 1);
-            out = insertShape(out, 'FilledRectangle', [x, labelY, w, labelH], ...
-                'Color', boxColor, 'Opacity', 1);
+            out = insertShape(out, "FilledRectangle", [x, labelY, w, labelH], ...
+                "Color", boxColor, "Opacity", 1);
 
             % Draw white label text on top
-            out = insertText(out, [x + 5, labelY - 1], label, ...
-                'BoxOpacity', 0, 'TextColor', 'white', 'FontSize', 18);
+            out = insertText(out, [x - 3, labelY - 8], label, ...
+                "Font", "Times New Roman", "BoxOpacity", 0, "TextColor", "white", "FontSize", 31);
         end
 
         % Show FPS and inference time
@@ -100,16 +100,16 @@ while true
         timingText = sprintf("FPS: %.1f | Inference: %.0f ms", fps, inferenceTime * 1000);
         % Estimate text position (top-right with margin)
         textMargin = 10;
-        textBoxWidth = 220;  % adjust if needed
+        textBoxWidth = 260;  % adjust if needed
         textBoxHeight = 25;
 
         xRight = size(out,2) - textBoxWidth - textMargin;
         yTop = textMargin;
         out = insertText(out, [xRight yTop], timingText, ...
-            "BoxColor", "black", "TextColor", "white", "FontSize", 14);
+            "Font", "Times New Roman", "BoxColor", "black", "TextColor", "white", "FontSize", 22);
     else
         out = insertText(orig, [10 10], "No detection", ...
-            "BoxColor", "red", "TextColor", "white", "FontSize", 14);
+            "Font", "Times New Roman", "BoxColor", "red", "TextColor", "white", "FontSize", 20);
     end
 
     %% Display Frame
