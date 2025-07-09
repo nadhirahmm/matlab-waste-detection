@@ -1,12 +1,12 @@
 %% Setup
-cam = webcam('c922 Pro Stream Webcam');
+cam = webcam('webcam_type');
 cam.Resolution = '640x480';
 inputSize = [416 416];
 
 labels = ["cardboard", "glass", "metal", "paper", "plastic", "trash"];
 colorMap = lines(numel(labels));  % 6 distinct RGB colors
 
-modelfile = "C:\Users\nadhi\OneDrive\Documents\YOLO-TrashNet\runs\detect\trashnet_yolov8n3\weights\best.onnx";
+modelfile = "path_to_model";
 net = importNetworkFromONNX(modelfile);
 net = initialize(net, dlarray(zeros(416, 416, 3, 1), 'SSCB'));
 sigmoid = @(x) 1 ./ (1 + exp(-x));

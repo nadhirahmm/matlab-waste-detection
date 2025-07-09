@@ -1,12 +1,12 @@
 %% Setup
-cam = webcam('c922 Pro Stream Webcam'); % Logi C270 HD WebCam c922 Pro Stream Webcam
+cam = webcam('webcam_type');
 cam.Resolution = '640x480';
 inputSize = [416 416];
 
 labels = ["cardboard", "glass", "metal", "paper", "plastic", "trash"];
 colorMap = lines(numel(labels));  % 6 distinct RGB colors
 
-modelfile = "C:\Users\nadhi\OneDrive\Desktop\ALLAHU AKBAR TA!!\YOLOv5\yolov5\runs\train\trashnet_yolov5s2\weights\best.onnx";
+modelfile = "path_to_model";
 net = importNetworkFromONNX(modelfile);
 
 fprintf("Press Ctrl+C to stop webcam inference\n");

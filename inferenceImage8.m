@@ -1,5 +1,5 @@
 %% Setup
-modelfile = "C:\Users\nadhi\OneDrive\Documents\YOLO-TrashNet\runs\detect\trashnet_yolov8n3\weights\best.onnx";
+modelfile = "path_to_model";
 % yolo export model=best.pt format=onnx imgsz=416 simplify=True opset=17
 labels = ["cardboard", "glass", "metal", "paper", "plastic", "trash"];
 colorMap = lines(numel(labels));  % 6 distinct RGB colors
@@ -9,7 +9,7 @@ net = importNetworkFromONNX(modelfile);
 net = initialize(net, dlarray(zeros(416, 416, 3, 1), 'SSCB'));
 
 %% Read and preprocess image
-orig = imread("C:\Users\nadhi\OneDrive\Documents\YOLO-TrashNet\images\val\trash270.jpg");
+orig = imread("path_to_image");
 img = imresize(orig, [416 416]);
 img = single(img) / 255;
 img = reshape(img, [416, 416, 3, 1]);

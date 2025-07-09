@@ -1,5 +1,5 @@
 %% Setup
-modelfile = "C:\Users\nadhi\OneDrive\Desktop\ALLAHU AKBAR TA!!\YOLOv7\yolov7\runs\train\trashnet_yolov7tiny8\weights\best.onnx";
+modelfile = "path_to_model";
 % python export.py --weights runs/train/trashnet_yolov7tiny8/weights/best.pt --img-size 416 --grid --simplify --dynamic-batch
 labels = ["cardboard", "glass", "metal", "paper", "plastic", "trash"];
 colorMap = lines(numel(labels));  % 6 distinct RGB colors
@@ -9,7 +9,7 @@ net = importNetworkFromONNX(modelfile);
 net = initialize(net, dlarray(zeros(416, 416, 3, 1), 'SSCB'));
 
 %% Read and preprocess image
-orig = imread("C:\Users\nadhi\OneDrive\Documents\YOLO-TrashNet\images\val\trash270.jpg");
+orig = imread("path_to_image");
 img = imresize(orig, [416 416]);
 img = single(img) / 255;
 img = reshape(img, [416, 416, 3, 1]);
